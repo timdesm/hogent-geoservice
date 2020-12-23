@@ -11,6 +11,8 @@ namespace DataLayer
     {
         private string connectionString;
 
+        public DataContext() { }
+
         public DataContext(string db = "production") : base()
         {
             SetConnectionString(db);
@@ -42,6 +44,17 @@ namespace DataLayer
             if (this.connectionString == null)
                 this.SetConnectionString();
             optionsBuilder.UseSqlServer(this.connectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Country>()
+                .HasMany<City>(c => c.Cities)
+                .WithOne();
+            modelBuilder.Entity<Country>()
+                .HasMany<City>(c => c.Capitals)
+                .WithOne();
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

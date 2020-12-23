@@ -17,6 +17,7 @@ namespace BusinessLayer.Models
         #endregion
 
         #region Constructor
+        public Country() { }
         public Country(String name, int population, int surface)
         {
             SetName(name);

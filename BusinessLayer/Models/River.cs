@@ -14,6 +14,7 @@ namespace BusinessLayer.Models
         #endregion
 
         #region Constructor
+        public River() { }
         public River(String name, int length, Country country)
         {
             SetName(name);
