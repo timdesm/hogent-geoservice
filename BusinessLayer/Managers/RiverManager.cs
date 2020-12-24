@@ -26,7 +26,9 @@ namespace BusinessLayer.Managers
             if (uow.Rivers.Exist(river)) throw new ExistException("river");
             try
             {
-                return uow.Rivers.Add(river);
+                river = uow.Rivers.Add(river);
+                uow.Complete();
+                return river;
             }
             catch (Exception) { throw new AddException("river"); }
         }
@@ -58,11 +60,12 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Delete River by Id
         /// </summary>
-        public void Delete(int id)
+        public void Delete(River river)
         {
             try
             {
-                uow.Rivers.Delete(id);
+                uow.Rivers.Delete(river);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("river"); }
         }
@@ -75,6 +78,7 @@ namespace BusinessLayer.Managers
             try
             {
                 uow.Rivers.DeleteAll();
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("rivers"); }
         }
@@ -84,10 +88,10 @@ namespace BusinessLayer.Managers
         /// </summary>
         public void Update(River river)
         {
-            if (uow.Rivers.Exist(river, true)) throw new ExistException("river");
             try
             {
                 uow.Rivers.Update(river);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("river"); }
         }
@@ -95,9 +99,9 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Check if River exist
         /// </summary>
-        public bool Exist(River river, bool ignoreId = false)
+        public bool Exist(River river)
         {
-            return uow.Rivers.Exist(river, ignoreId);
+            return uow.Rivers.Exist(river);
         }
     }
 }

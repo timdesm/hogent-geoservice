@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using static BusinessLayer.Utils.ExceptionUtil;
 
@@ -26,7 +27,9 @@ namespace BusinessLayer.Managers
             if (uow.Cities.Exist(city)) throw new ExistException("city");
             try
             {
-                return uow.Cities.Add(city);
+                uow.Countries.Update(city.Country);
+                uow.Complete();
+                return uow.Cities.GetAll().Last();
             }
             catch(Exception) { throw new AddException("city"); }
         }
@@ -58,11 +61,12 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Delete City by Id
         /// </summary>
-        public void Delete(int id)
+        public void Delete(City city)
         {
             try
             {
-                uow.Cities.Delete(id);
+                uow.Cities.Delete(city);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("city"); }
         }
@@ -75,6 +79,7 @@ namespace BusinessLayer.Managers
             try
             {
                 uow.Cities.DeleteAll();
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("cities"); }
         }
@@ -84,10 +89,10 @@ namespace BusinessLayer.Managers
         /// </summary>
         public void Update(City city)
         {
-            if(uow.Cities.Exist(city, true)) throw new ExistException("city");
             try
             {
                 uow.Cities.Update(city);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("city"); }
         }
@@ -95,9 +100,9 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Check if City exist
         /// </summary>
-        public bool Exist(City city, bool ignoreId = false)
+        public bool Exist(City city)
         {
-            return uow.Cities.Exist(city, ignoreId);
+            return uow.Cities.Exist(city);
         }
     }
 }

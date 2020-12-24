@@ -64,7 +64,6 @@ namespace DataLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Population = table.Column<int>(type: "int", nullable: false),
-                    CountryId2 = table.Column<int>(type: "int", nullable: true),
                     CountryId = table.Column<int>(type: "int", nullable: true),
                     CountryId1 = table.Column<int>(type: "int", nullable: true)
                 },
@@ -80,12 +79,6 @@ namespace DataLayer.Migrations
                     table.ForeignKey(
                         name: "FK_Cities_Counties_CountryId1",
                         column: x => x.CountryId1,
-                        principalTable: "Counties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Cities_Counties_CountryId2",
-                        column: x => x.CountryId2,
                         principalTable: "Counties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -124,11 +117,6 @@ namespace DataLayer.Migrations
                 name: "IX_Cities_CountryId1",
                 table: "Cities",
                 column: "CountryId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cities_CountryId2",
-                table: "Cities",
-                column: "CountryId2");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Counties_ContinentId",

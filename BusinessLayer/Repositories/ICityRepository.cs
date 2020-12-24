@@ -10,9 +10,9 @@ namespace BusinessLayer.Repositories
         public City Add(City city);
         public City GetById(int id);
         public List<City> GetAll();
-        public void Delete(int id);
+        public void Delete(City city);
         public void DeleteAll();
         public void Update(City city);
-        public bool Exist(City city, bool ignoreId = false);
+        public bool Exist(City city);
     }
 }

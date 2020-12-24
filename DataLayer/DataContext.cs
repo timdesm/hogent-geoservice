@@ -50,10 +50,7 @@ namespace DataLayer
         {
             modelBuilder.Entity<Country>()
                 .HasMany<City>(c => c.Cities)
-                .WithOne();
-            modelBuilder.Entity<Country>()
-                .HasMany<City>(c => c.Capitals)
-                .WithOne();
+                .WithOne(x => x.Country);
             base.OnModelCreating(modelBuilder);
         }
     }

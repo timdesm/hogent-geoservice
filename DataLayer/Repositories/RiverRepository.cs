@@ -8,12 +8,22 @@ namespace DataLayer.Repositories
 {
     public class RiverRepository : IRiverRepository
     {
+        protected DataContext context;
+
+        /// <summary> 
+        /// Create River Repository with DataContext
+        /// </summary>
+        public RiverRepository(DataContext context)
+        {
+            this.context = context;
+        }
+
         public River Add(River river)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(River river)
         {
             throw new NotImplementedException();
         }
@@ -23,7 +33,7 @@ namespace DataLayer.Repositories
             throw new NotImplementedException();
         }
 
-        public bool Exist(River river, bool ignoreId = false)
+        public bool Exist(River river)
         {
             throw new NotImplementedException();
         }

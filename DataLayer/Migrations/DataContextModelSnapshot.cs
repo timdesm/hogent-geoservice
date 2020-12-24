@@ -32,9 +32,6 @@ namespace DataLayer.Migrations
                     b.Property<int?>("CountryId1")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CountryId2")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -46,8 +43,6 @@ namespace DataLayer.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("CountryId1");
-
-                    b.HasIndex("CountryId2");
 
                     b.ToTable("Cities");
                 });
@@ -131,7 +126,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("BusinessLayer.Models.City", b =>
                 {
-                    b.HasOne("BusinessLayer.Models.Country", null)
+                    b.HasOne("BusinessLayer.Models.Country", "Country")
                         .WithMany("Cities")
                         .HasForeignKey("CountryId");
 
@@ -139,18 +134,16 @@ namespace DataLayer.Migrations
                         .WithMany("Capitals")
                         .HasForeignKey("CountryId1");
 
-                    b.HasOne("BusinessLayer.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId2");
-
                     b.Navigation("Country");
                 });
 
             modelBuilder.Entity("BusinessLayer.Models.Country", b =>
                 {
-                    b.HasOne("BusinessLayer.Models.Continent", null)
+                    b.HasOne("BusinessLayer.Models.Continent", "Continent")
                         .WithMany("Countries")
                         .HasForeignKey("ContinentId");
+
+                    b.Navigation("Continent");
                 });
 
             modelBuilder.Entity("CountryRiver", b =>

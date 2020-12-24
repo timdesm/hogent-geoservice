@@ -10,9 +10,9 @@ namespace BusinessLayer.Repositories
         public Continent Add(Continent continent);
         public Continent GetById(int id);
         public List<Continent> GetAll();
-        public void Delete(int id);
+        public void Delete(Continent continent);
         public void DeleteAll();
         public void Update(Continent continent);
-        public bool Exist(Continent continent, bool ignoreId = false);
+        public bool Exist(Continent continent);
     }
 }

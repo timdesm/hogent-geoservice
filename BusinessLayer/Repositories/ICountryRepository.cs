@@ -10,9 +10,9 @@ namespace BusinessLayer.Repositories
         public Country Add(Country country);
         public Country GetById(int id);
         public List<Country> GetAll();
-        public void Delete(int id);
+        public void Delete(Country country);
         public void DeleteAll();
         public void Update(Country country);
-        public bool Exist(Country country, bool ignoreId = false);
+        public bool Exist(Country country);
     }
 }

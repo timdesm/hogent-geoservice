@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BusinessLayer.Models
@@ -11,6 +12,7 @@ namespace BusinessLayer.Models
         public String Name { get; private set; }
         public int Population { get; private set; }
         public int Surface { get; private set; }
+        public Continent Continent { get; private set; }
         public virtual ICollection<City> Cities { get; private set; } = new List<City>();
         public virtual ICollection<City> Capitals { get; private set; } = new List<City>();
         public virtual ICollection<River> Rivers { get; private set; } = new List<River>();
@@ -18,11 +20,12 @@ namespace BusinessLayer.Models
 
         #region Constructor
         public Country() { }
-        public Country(String name, int population, int surface)
+        public Country(String name, int population, int surface, Continent continent)
         {
             SetName(name);
             SetPopulation(population);
             SetSurface(surface);
+            SetContinent(continent);
         }
         #endregion
 
@@ -41,6 +44,11 @@ namespace BusinessLayer.Models
         {
             if (surface < 1) throw new InvalidSurfaceException();
             this.Surface = surface;
+        }
+        public void SetContinent(Continent continent)
+        {
+            if (continent == null) throw new InvalidContinentException();
+            this.Continent = continent;
         }
         #region Cities
         public void AddCities(List<City> cities)
@@ -109,7 +117,7 @@ namespace BusinessLayer.Models
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType())) return false;
-            City y = (City)obj;
+            Country y = (Country) obj;
             if (this.Id == y.Id && this.Name == y.Name) return true;
             return false;
         }
@@ -135,6 +143,10 @@ namespace BusinessLayer.Models
         public class InvalidSurfaceException : Exception
         {
             public InvalidSurfaceException() : base(String.Format("The surface cannot be empty or lower than 1")) { }
+        }
+        public class InvalidContinentException : Exception
+        {
+            public InvalidContinentException() : base(String.Format("The continent cannot be empty")) { }
         }
         public class InvalidCityException : Exception
         {

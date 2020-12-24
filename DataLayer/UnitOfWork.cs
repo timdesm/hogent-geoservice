@@ -1,5 +1,6 @@
 ﻿using BusinessLayer;
 using BusinessLayer.Repositories;
+using DataLayer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,10 @@ namespace DataLayer
         public UnitOfWork(DataContext context)
         {
             this.context = context;
+            this.Cities = new CityRepository(context);
+            this.Continents = new ContinentRepository(context);
+            this.Countries = new CountryRepository(context);
+            this.Rivers = new RiverRepository(context);
         }
 
         public ICityRepository Cities { get; private set; }

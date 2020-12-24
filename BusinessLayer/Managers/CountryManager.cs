@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using static BusinessLayer.Utils.ExceptionUtil;
 
@@ -26,7 +27,9 @@ namespace BusinessLayer.Managers
             if (uow.Countries.Exist(country)) throw new ExistException("country");
             try
             {
-                return uow.Countries.Add(country);
+                uow.Continents.Update(country.Continent); 
+                uow.Complete();
+                return uow.Countries.GetAll().Last();
             }
             catch (Exception) { throw new AddException("country"); }
         }
@@ -58,11 +61,15 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Delete Country by Id
         /// </summary>
-        public void Delete(int id)
+        public void Delete(Country country)
         {
             try
             {
-                uow.Countries.Delete(id);
+                if (country.Cities.Count != 0) throw new DeleteException("country");
+                country.Continent.RemoveCountry(country);
+                uow.Continents.Update(country.Continent);
+                uow.Countries.Delete(country);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("country"); }
         }
@@ -75,6 +82,7 @@ namespace BusinessLayer.Managers
             try
             {
                 uow.Countries.DeleteAll();
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("countries"); }
         }
@@ -84,10 +92,10 @@ namespace BusinessLayer.Managers
         /// </summary>
         public void Update(Country country)
         {
-            if (uow.Countries.Exist(country, true)) throw new ExistException("country");
             try
             {
                 uow.Countries.Update(country);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("country"); }
         }
@@ -95,9 +103,9 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Check if Country exist
         /// </summary>
-        public bool Exist(Country country, bool ignoreId = false)
+        public bool Exist(Country country)
         {
-            return uow.Countries.Exist(country, ignoreId);
+            return uow.Countries.Exist(country);
         }
     }
 }

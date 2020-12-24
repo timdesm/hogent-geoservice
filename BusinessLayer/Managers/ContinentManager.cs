@@ -26,7 +26,9 @@ namespace BusinessLayer.Managers
             if (uow.Continents.Exist(continent)) throw new ExistException("continent");
             try
             {
-                return uow.Continents.Add(continent);
+                continent = uow.Continents.Add(continent);
+                uow.Complete();
+                return continent;
             }
             catch (Exception) { throw new AddException("continent"); }
         }
@@ -58,11 +60,13 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Delete Continent by Id
         /// </summary>
-        public void Delete(int id)
+        public void Delete(Continent continent)
         {
             try
             {
-                uow.Continents.Delete(id);
+                if(continent.Countries.Count != 0) throw new DeleteException("continent");
+                uow.Continents.Delete(continent);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("continent"); }
         }
@@ -75,6 +79,7 @@ namespace BusinessLayer.Managers
             try
             {
                 uow.Continents.DeleteAll();
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("continents"); }
         }
@@ -84,10 +89,10 @@ namespace BusinessLayer.Managers
         /// </summary>
         public void Update(Continent continent)
         {
-            if (uow.Continents.Exist(continent, true)) throw new ExistException("continent");
             try
             {
                 uow.Continents.Update(continent);
+                uow.Complete();
             }
             catch (Exception) { throw new DeleteException("continent"); }
         }
@@ -95,9 +100,9 @@ namespace BusinessLayer.Managers
         /// <summary> 
         /// Check if Continent exist
         /// </summary>
-        public bool Exist(Continent continent, bool ignoreId = false)
+        public bool Exist(Continent continent)
         {
-            return uow.Continents.Exist(continent, ignoreId);
+            return uow.Continents.Exist(continent);
         }
     }
 }
