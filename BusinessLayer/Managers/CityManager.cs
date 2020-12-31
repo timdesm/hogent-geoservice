@@ -94,7 +94,7 @@ namespace BusinessLayer.Managers
                 uow.Cities.Update(city);
                 uow.Complete();
             }
-            catch (Exception) { throw new DeleteException("city"); }
+            catch (Exception) { throw new UpdateException("city"); }
         }
 
         /// <summary> 

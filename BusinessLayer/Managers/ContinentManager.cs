@@ -94,7 +94,7 @@ namespace BusinessLayer.Managers
                 uow.Continents.Update(continent);
                 uow.Complete();
             }
-            catch (Exception) { throw new DeleteException("continent"); }
+            catch (Exception) { throw new UpdateException("continent"); }
         }
 
         /// <summary> 

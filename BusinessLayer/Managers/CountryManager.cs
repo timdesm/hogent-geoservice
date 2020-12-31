@@ -97,7 +97,7 @@ namespace BusinessLayer.Managers
                 uow.Countries.Update(country);
                 uow.Complete();
             }
-            catch (Exception) { throw new DeleteException("country"); }
+            catch (Exception) { throw new UpdateException("country"); }
         }
 
         /// <summary> 

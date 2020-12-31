@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using static BusinessLayer.Utils.ExceptionUtil;
 
@@ -26,9 +27,13 @@ namespace BusinessLayer.Managers
             if (uow.Rivers.Exist(river)) throw new ExistException("river");
             try
             {
-                river = uow.Rivers.Add(river);
-                uow.Complete();
-                return river;
+                //uow.Rivers.Add(river);
+                foreach (Country country in river.Countries)
+                {
+                    uow.Countries.Update(country);
+                }
+                
+                return uow.Rivers.GetAll().Last();
             }
             catch (Exception) { throw new AddException("river"); }
         }
@@ -93,7 +98,7 @@ namespace BusinessLayer.Managers
                 uow.Rivers.Update(river);
                 uow.Complete();
             }
-            catch (Exception) { throw new DeleteException("river"); }
+            catch (Exception) { throw new UpdateException("river"); }
         }
 
         /// <summary> 

@@ -46,7 +46,7 @@ namespace BusinessLayer.Models
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType())) return false;
-            City y = (City)obj;
+            City y = (City) obj;
             if (this.Id == y.Id && this.Name == y.Name) return true;
             return false;
         }

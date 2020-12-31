@@ -54,8 +54,8 @@ namespace BusinessLayer.Models
         public override bool Equals(object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType())) return false;
-            City y = (City)obj;
-            if (this.Id == y.Id && this.Name == y.Name) return true;
+            Continent y = (Continent) obj;
+            if (this.Name == y.Name) return true;
             return false;
         }
         public override int GetHashCode()

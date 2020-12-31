@@ -15,11 +15,11 @@ namespace BusinessLayer.Models
 
         #region Constructor
         public River() { }
-        public River(String name, int length, Country country)
+        public River(String name, int length, List<Country> countries)
         {
             SetName(name);
             SetLength(length);
-            
+            AddCountries(countries);
         }
         #endregion
 
@@ -60,7 +60,7 @@ namespace BusinessLayer.Models
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType())) return false;
             River y = (River) obj;
-            if (this.Id == y.Id && this.Name == y.Name) return true;
+            if (this.Name == y.Name) return true;
             return false;
         }
         public override int GetHashCode()
